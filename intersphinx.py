@@ -26,6 +26,14 @@ INVENTORIES = {
     ],
 }
 
+TYPE_BIASES = {
+    'py:module': -300,
+    'py:class': -200,
+    'py:function': -100,
+}
+SORT_KEY = lambda is_shortened, n_dots, typ, list_pos: \
+    (is_shortened * 100, n_dots, TYPE_BIASES.get(typ, 0), list_pos)
+
 ALL_INVENTORIES = set().union(*INVENTORIES.values())
 
 def load_inventories(invs):
@@ -54,11 +62,6 @@ m = {}
 
 invs = load_inventories(ALL_INVENTORIES)
 
-TYPE_BIASES = {
-    'py:module': -300,
-    'py:class': -200,
-    'py:function': -100,
-}
 
 def build_mapping(inventory):
     mappings = []
@@ -66,12 +69,10 @@ def build_mapping(inventory):
         uri, inv = v
         inv = invs[uri]
         for typ, entries in inv.items():
-            type_key = TYPE_BIASES.get(typ, 0)
             for k, v in entries.items():
                 n_dots = k.count('.')
-                key = (n_dots, type_key, list_pos)
-                mappings.append(((0,) + key, (k.casefold(), v)))
-                mappings.append(((100,) + key, (k.split('.')[-1].casefold(), v)))
+                mappings.append((SORT_KEY(False, n_dots, typ, list_pos), (k.casefold(), v)))
+                mappings.append((SORT_KEY(True, n_dots, typ, list_pos), (k.split('.')[-1].casefold(), v)))
     mappings.sort(key=operator.itemgetter(0), reverse=True)
     return dict(map(operator.itemgetter(1), mappings))
 
