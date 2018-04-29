@@ -55,6 +55,7 @@ m = {}
 invs = load_inventories(ALL_INVENTORIES)
 
 TYPE_BIASES = {
+    'py:module': -300,
     'py:class': -200,
     'py:function': -100,
 }
