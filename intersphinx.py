@@ -22,7 +22,7 @@ INVENTORIES = {
         ('https://clize.readthedocs.io/en/stable/', 'https://clize.readthedocs.io/en/stable/objects.inv'),
         ('https://construct.readthedocs.io/en/stable/', 'https://construct.readthedocs.io/en/stable/objects.inv'),
         ('http://werkzeug.pocoo.org/docs/0.14/', 'http://werkzeug.pocoo.org/docs/0.14/objects.inv'),
-        ('http://flask.pocoo.org/docs/0.12/', 'http://flask.pocoo.org/docs/0.12/objects.inv'),
+        ('http://flask.pocoo.org/docs/1.0/', 'http://flask.pocoo.org/docs/1.0/objects.inv'),
     ],
 }
 
