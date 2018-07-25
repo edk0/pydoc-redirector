@@ -72,7 +72,9 @@ def build_mapping(inventory):
             for k, v in entries.items():
                 n_dots = k.count('.')
                 mappings.append((SORT_KEY(False, n_dots, typ, list_pos), (k.casefold(), v)))
-                mappings.append((SORT_KEY(True, n_dots, typ, list_pos), (k.split('.')[-1].casefold(), v)))
+                bits = k.casefold().split('.')
+                for n in range(1, len(bits)):
+                    mappings.append((SORT_KEY(True, n_dots, typ, list_pos), ('.'.join(bits[-n:]), v)))
     mappings.sort(key=operator.itemgetter(0), reverse=True)
     return dict(map(operator.itemgetter(1), mappings))
 
